@@ -4,6 +4,7 @@
 
 Miner::Miner()
 {
+	isMiner = true; //es minero
 }
 
 
