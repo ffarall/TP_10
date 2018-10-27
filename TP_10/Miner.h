@@ -3,6 +3,9 @@
 #include "Block.h"
 #include "Transaction.h"
 
+#include <stack>
+#include <cstdint>
+
 class Miner :
 	public FullService
 {
@@ -21,5 +24,7 @@ protected:
 	Block currentBlock;
 	// Buffer for transactions to be mined after.
 	vector<Transaction> transactionsBuffer;
+	// List of nounces already tried.
+	stack<uint32_t> triedNounces;
 };
 

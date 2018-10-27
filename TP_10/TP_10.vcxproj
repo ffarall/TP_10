@@ -131,10 +131,11 @@
     <ClInclude Include="BlockChain.h" />
     <ClInclude Include="FullService.h" />
     <ClInclude Include="GridEvent.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Miner.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Trader.h" />
-    <ClInclude Include="Receipt.h" />
+    <ClInclude Include="Output.h" />
     <ClInclude Include="Transaction.h" />
   </ItemGroup>
   <ItemGroup>
@@ -142,10 +143,11 @@
     <ClCompile Include="BlockChain.cpp" />
     <ClCompile Include="FullService.cpp" />
     <ClCompile Include="GridEvent.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Miner.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Trader.cpp" />
-    <ClCompile Include="Receipt.cpp" />
+    <ClCompile Include="Output.cpp" />
     <ClCompile Include="Transaction.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

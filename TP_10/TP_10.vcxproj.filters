@@ -36,10 +36,13 @@
     <ClInclude Include="GridEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Receipt.h">
+    <ClInclude Include="Trader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Trader.h">
+    <ClInclude Include="Output.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,10 +68,13 @@
     <ClCompile Include="GridEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Receipt.cpp">
+    <ClCompile Include="Trader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Trader.cpp">
+    <ClCompile Include="Output.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,7 +2,7 @@
 #include "Node.h"
 #include "Transaction.h"
 #include "GridEvent.h"
-#include "Receipt.h"
+#include "Output.h"
 
 #include "cryptlib.h"
 #include "osrng.h"
@@ -25,7 +25,7 @@ public:
 	// Sends a Transaction type GridEvent.
 	bool emitTransaction(Node& fromNode, vector<Node&> toNodes, vector<double> amountsTransfered);
 	// Returns the UTXOs of this Trader.
-	vector<Receipt*> getUTXOs();
+	vector<Output*> getUTXOs();
 
 	// Returns true if this is a miner.
 	bool isMiner();
@@ -43,7 +43,7 @@ protected:
 	// Trader's signature.
 	vector<byte> signature;
 	// It's the all of the UTXOs referred to this Trader.
-	vector<Receipt*> UTXOs;
+	vector<Output*> UTXOs;
 	// True if this is a miner, false otherwise.
 	bool isMiner;
 };

@@ -1,7 +1,7 @@
 #pragma once
-#include <string>
 #include <cstdint>
 #include <vector>
+#include <ctime>
 
 #include "Transaction.h"
 #include "Block.h"
@@ -18,19 +18,19 @@ public:
 	~Block();
 
 	// Hashes the block, modifies the thisHash field and returns the hash.
-	uint32_t hashBlock();
+	SHA256 hashBlock();
 	// Updates timestamp.
 	void updateTime();
 	// Changes nounce.
-	void setNounce();
+	void setNounce(uint32_t nounce_);
 
 private:
 	// Hash of this block.
 	SHA256 thisHash;
 	// Hash of previous block.
 	SHA256 previousHash;
-	// Time-stamp of the block up to seconds.
-	uint32_t timestamp;
+	// Time-stamp of the block up to seconds, since epoch.
+	time_t timestamp;
 	// This is what the miners change in order to mine;
 	uint32_t nounce;
 	// Amount of transactions in block.
