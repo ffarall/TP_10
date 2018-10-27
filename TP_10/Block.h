@@ -13,7 +13,7 @@ using namespace std;
 class Block
 {
 public:
-	Block(vector<Transaction> transactionsList_, Block previousBlock);
+	Block(vector<Transaction*> transactionsList_, Block previousBlock);
 	Block();
 	~Block();
 
