@@ -4,7 +4,8 @@
 #include "Output.h"
 #include "Input.h"
 
-#include "sha3.h"
+using namespace std;
+using namespace CryptoPP;
 
 class Transaction
 {
@@ -13,24 +14,26 @@ public:
 	Transaction(vector<Input*> inputs_, vector<Output*> outputs_);
 	~Transaction();
 
-	SHA256 getHash();
+	string getHash();
 	vector<Output*> getOutputs();
+	vector<Input*> getInputs();
 
 	void setInputs(vector<Input*> inputs_);
 	void setOutputs(vector<Output*> outputs_);
 
 private:
+	// Hashes the transaction.
+	void hashTransaction();
+
 	// Hash of the transaction;
-	SHA256 hash;
+	string hash;
 	// Inputs of the transaction.
 	vector<Input*> inputs;
 	// Input counter.
-	uint16_t inputsCount;
+	size_t inputsCount;
 	// Outputs of the transaction.
 	vector<Output*> outputs;
 	// Output counter.
-	uint16_t outputsCount;
-	// Total amount of coins available for transaction.
-	uint32_t totalCoins;
+	size_t outputsCount;
 };
 

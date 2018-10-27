@@ -4,6 +4,9 @@
 #include "cryptlib.h"
 #include "osrng.h"
 #include "eccrypto.h"
+#include "oids.h"
+#include "hex.h"
+#include "sha3.h"
 
 using namespace CryptoPP;
 
@@ -13,6 +16,12 @@ class Output
 public:
 	Output();
 	~Output();
+
+	uint32_t getCoins();
+	ECDSA<ECP, SHA256>::PublicKey getLockingScript();
+
+	void setCoins(uint32_t coins_);
+	void setLockingScript(ECDSA<ECP, SHA256>::PublicKey lockingScript_);
 
 private:
 	// Public Key of the owner of the amount of coins.
