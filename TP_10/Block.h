@@ -18,7 +18,7 @@ public:
 	~Block();
 
 	// Hashes the block, modifies the thisHash field and returns the hash.
-	SHA256 hashBlock();
+	string hashBlock();
 	// Updates timestamp.
 	void updateTime();
 	// Changes nounce.
@@ -26,9 +26,9 @@ public:
 
 private:
 	// Hash of this block.
-	SHA256 thisHash;
+	string thisHash;
 	// Hash of previous block.
-	SHA256 previousHash;
+	string previousHash;
 	// Time-stamp of the block up to seconds, since epoch.
 	time_t timestamp;
 	// This is what the miners change in order to mine;
