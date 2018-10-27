@@ -76,7 +76,14 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\Useful\cyptocpp\Includes;</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>cryptlib.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Useful\cyptocpp\</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -84,7 +91,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Useful\cyptocpp\Includes</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Useful\cyptocpp\Lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cryptopp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -115,6 +127,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="BlockChain.h" />
+    <ClInclude Include="FullService.h" />
+    <ClInclude Include="GridEvent.h" />
+    <ClInclude Include="Miner.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Trader.h" />
+    <ClInclude Include="Receipt.h" />
+    <ClInclude Include="Transaction.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BlockChain.cpp" />
+    <ClCompile Include="FullService.cpp" />
+    <ClCompile Include="GridEvent.cpp" />
+    <ClCompile Include="Miner.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Trader.cpp" />
+    <ClCompile Include="Receipt.cpp" />
+    <ClCompile Include="Transaction.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
