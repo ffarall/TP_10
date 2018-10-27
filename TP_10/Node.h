@@ -12,19 +12,19 @@ public:
 	Node();
 	virtual ~Node();
 
-	void addNeighbour(Node&);
+	void addNeighbour(Node& newNeighbour);
 
-	vector<Node&> getNeighbours();
+	vector<Node*> getNeighbours();
 
 	bool sendInformation(GridEvent& info);
-	bool isNewInformation();
+	//bool isNewInformation();
 	bool receiveNewInformation(GridEvent& info);
-	GridEvent& getNewInformation();
+	GridEvent* getNewInformation();
 
 protected:
 	// List of neighbours.
-	vector<Node&> neighbours;
+	vector<Node*> neighbours;
 	// Pile of information packages received.
-	queue<GridEvent&> infoPackages;
+	queue<GridEvent*> infoPackages;
 };
 
