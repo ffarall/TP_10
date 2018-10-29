@@ -36,6 +36,6 @@ private:
 	// Amount of transactions in block.
 	size_t transactionsAmount;
 	// List of transactions in the block.
-	vector<Transaction> transactionsList;
+	vector<Transaction*> transactionsList;
 };
 

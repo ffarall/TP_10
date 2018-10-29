@@ -23,7 +23,7 @@ public:
 
 private:
 	// Hashes the transaction.
-	void hashTransaction();
+	void hashTransaction();  // CAMBIAR ESTA IMPLEMENTACIÓN, NO USAR LOS PUNTEROS PARA EL HASH
 
 	// Hash of the transaction;
 	string hash;
