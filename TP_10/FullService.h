@@ -18,6 +18,8 @@ protected:
 	bool validateTransaction();
 	// Checks if a block is well formed.
 	bool validateBlock();
+	// Buffer for transactions to be mined after.
+	vector<Transaction> transactionsBuffer;
 
 	virtual bool consultBalance();
 

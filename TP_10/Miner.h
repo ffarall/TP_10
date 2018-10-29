@@ -22,8 +22,7 @@ protected:
 
 	// Block that is being mined right now.
 	Block currentBlock;
-	// Buffer for transactions to be mined after.
-	vector<Transaction> transactionsBuffer;
+	
 	// List of nounces already tried.
 	stack<uint32_t> triedNounces;
 };
