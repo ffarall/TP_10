@@ -24,6 +24,9 @@ public:
 	void setOutputTransactionHash(string hash);
 	void setOutputIndex(size_t index);
 
+	// Creates string of all the Input data.
+	string inputToString();
+
 private:
 	// Hash of the transaction containing the UTXO referenced.
 	string outputTransactionHash;

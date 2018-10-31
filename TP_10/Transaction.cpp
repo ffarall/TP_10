@@ -86,13 +86,11 @@ void Transaction::hashTransaction()
 	toHash += to_string(inputsCount) + to_string(outputsCount);
 	for (auto input : inputs)
 	{
-		int add = (int)input;
-		toHash += to_string(add);
+		toHash += input->inputToString();
 	}
 	for (auto output : outputs)
 	{
-		int add = (int)output;
-		toHash += to_string(add);
+		toHash += output->outputToString();
 	}																								// Creating a string of all the data contained in the transaction to be hashed.
 
 	SHA256 hasher;
