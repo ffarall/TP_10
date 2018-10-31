@@ -13,6 +13,8 @@ class GridEvent
 {
 public:
 	GridEvent();
+	//copy constructor
+	GridEvent(const GridEvent& event_);
 	~GridEvent();
 
 	void setType(GridEventType type_);

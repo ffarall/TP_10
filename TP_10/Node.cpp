@@ -4,6 +4,7 @@
 
 Node::Node()
 {
+	
 }
 
 
@@ -21,28 +22,33 @@ vector<Node*> Node::getNeighbours()
 	return neighbours;
 }
 
-bool Node::sendInformation(GridEvent & info)
+void Node::sendInformation(GridEvent & info)
 {
-	Node* emisor = info.getEmisor(); //guardo el emisor original
-	info.setEmisor(this);
+	Node* emitter = info.getEmisor(); //guardo el emisor original
+	GridEvent* localEvent = new GridEvent(info);//creo un nuevo evento para distribuir
+	localEvent->setEmisor(this);//cambio el emisor al nodo actual
 	for (Node* neighbour : neighbours)
 	{
-		if (neighbour != emisor) //para todos los vecinos, menos el que envia el mensaje, envio el evento
+		if (neighbour != emitter) //para todos los vecinos, menos el que envia el mensaje, envio el evento
 		{
 			neighbour->receiveNewInformation(info);
 		}
 	}
+	delete localEvent;
 }
 
 
-bool Node::receiveNewInformation(GridEvent & info)
+void Node::receiveNewInformation(GridEvent & info)
 {
-	return false;
+	//validate info here!!!
+	infoPackages.push(info);	
+	sendInformation(info);
+		
 }
 
-GridEvent * Node::getNewInformation()
+GridEvent  Node::getNewInformation()
 {
-	GridEvent* temp = infoPackages.front();
+	GridEvent temp = infoPackages.front();
 	infoPackages.pop();  //no estoy seguro de que esto sea necesario!!
 	return temp;
 }

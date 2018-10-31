@@ -11,3 +11,13 @@ Miner::Miner()
 Miner::~Miner()
 {
 }
+
+bool Miner::runCycle()
+{
+	return false;
+}
+
+bool Miner::mine()
+{
+	return false;
+}

@@ -16,15 +16,15 @@ public:
 
 	vector<Node*> getNeighbours();
 
-	bool sendInformation(GridEvent& info);
+	void sendInformation(GridEvent& info);
 	//bool isNewInformation();
-	bool receiveNewInformation(GridEvent& info);
-	GridEvent* getNewInformation();
+	void receiveNewInformation(GridEvent& info);
+	GridEvent getNewInformation();
 
 protected:
 	// List of neighbours.
 	vector<Node*> neighbours;
 	// Pile of information packages received.
-	queue<GridEvent*> infoPackages;
+	queue<GridEvent> infoPackages;
 };
 

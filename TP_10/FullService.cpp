@@ -11,3 +11,23 @@ FullService::FullService()
 FullService::~FullService()
 {
 }
+
+bool FullService::respondBalanceConsulted()
+{
+	return false;
+}
+
+bool FullService::validateTransaction()
+{
+	return false;
+}
+
+bool FullService::validateBlock()
+{
+	return false;
+}
+
+bool FullService::consultBalance()
+{
+	return false;
+}
