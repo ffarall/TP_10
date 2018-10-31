@@ -2,7 +2,7 @@
 #include<random>
 
 #define MAX_32 4294967296
-
+#define ZERO_IN_HASH 4
 Miner::Miner()
 {
 	isMiner = true; //es minero
@@ -80,6 +80,13 @@ bool Miner::mine()
 
 bool Miner::challengeHash(std::string hash) // el challenge es obtener 0 en las primeras posiciones del hash, definido por la constante ZERO_IN_HASH
 {
-	for(int i = 0, i<ZERO_IN_HASH)
-	return false;
+	bool error = false;
+	for (int i = 0; i < ZERO_IN_HASH && !error;i++)
+	{
+		if (hash[i] != '0')
+		{
+			error = true;
+		}
+	}
+	return error ? false : true;
 }
