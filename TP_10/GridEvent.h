@@ -15,7 +15,7 @@ public:
 	GridEvent();
 	//copy constructor
 	GridEvent(const GridEvent& event_);
-	~GridEvent();
+	virtual ~GridEvent();
 
 	void setType(GridEventType type_);
 	void setEmisor(Node * emisor_);
@@ -29,17 +29,10 @@ public:
 	Transaction* getNewTransaction();
 	BlockChain* getNewBlockChain();
 
-private:
+protected:
 	// Type of the event.
 	GridEventType type;
 	// Pointer to emitting node.
 	Node * emisor;
-
-	// Event content if it is NEW_BLOCK_MINED.
-	Block newBlock;
-	// Event content if it is NEW_TRANSACTION.
-	Transaction newTransaction;
-	// Event content if it is GET_BLOCKCHAIN.
-	BlockChain newBlockChain;
 };
 

@@ -131,6 +131,9 @@
     <ClInclude Include="BlockChain.h" />
     <ClInclude Include="FullService.h" />
     <ClInclude Include="GridEvent.h" />
+    <ClInclude Include="GridEventBlock.h" />
+    <ClInclude Include="GridEventBlockChain.h" />
+    <ClInclude Include="GridEventTransaction.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Miner.h" />
     <ClInclude Include="Node.h" />
@@ -143,6 +146,9 @@
     <ClCompile Include="BlockChain.cpp" />
     <ClCompile Include="FullService.cpp" />
     <ClCompile Include="GridEvent.cpp" />
+    <ClCompile Include="GridEventBlock.cpp" />
+    <ClCompile Include="GridEventBlockChain.cpp" />
+    <ClCompile Include="GridEventTransaction.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Miner.cpp" />
     <ClCompile Include="Node.cpp" />
