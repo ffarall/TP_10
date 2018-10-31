@@ -10,8 +10,11 @@ class FullService :
 public:
 	FullService();
 	virtual ~FullService();
+	virtual bool runCycle();
 
 protected:
+	//Process and validate recieved GridEvent from queue.
+	virtual bool processEvent(GridEvent* gridEvent);
 	// A FullService can responde this.
 	bool respondBalanceConsulted();
 	// Checks if a transaction is well formed.
@@ -24,6 +27,6 @@ protected:
 	virtual bool consultBalance();
 
 	// Internal BlockChain saved by every FullService.
-	BlockChain& blockChain;
+	BlockChain* blockChain;
 };
 

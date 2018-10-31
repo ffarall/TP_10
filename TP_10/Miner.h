@@ -17,13 +17,19 @@ public:
 	virtual bool runCycle();
 
 protected:
+	//Process and validate recieved GridEvent from queue.
+	virtual bool processEvent(GridEvent* gridEvent);
 	// Tries to mine with one nounce the currentBlock.
 	bool mine();
 
 	// Block that is being mined right now.
 	Block currentBlock;
+	//bool to know when to refresh current mining block
+	bool refreshCurrentBlock;
 	
 	// List of nounces already tried.
 	stack<uint32_t> triedNounces;
+
+	
 };
 

@@ -7,6 +7,9 @@
 #include "Block.h"
 
 #include "sha3.h"
+#include<cstdlib>
+
+
 
 using namespace std;
 

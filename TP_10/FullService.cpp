@@ -12,6 +12,16 @@ FullService::~FullService()
 {
 }
 
+bool FullService::runCycle()
+{
+	return false;
+}
+
+bool FullService::processEvent(GridEvent * gridEvent)
+{
+	return false;
+}
+
 bool FullService::respondBalanceConsulted()
 {
 	return false;
