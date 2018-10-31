@@ -6,6 +6,7 @@ class GridEventTransaction :
 public:
 	GridEventTransaction();
 	virtual ~GridEventTransaction();
+	Transaction* getNewTransaction();
 
 protected:
 	// Event content if it is NEW_TRANSACTION.

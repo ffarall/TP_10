@@ -25,9 +25,6 @@ public:
 
 	GridEventType getType();
 	Node* getEmisor();
-	Block* getNewBlock();
-	Transaction* getNewTransaction();
-	BlockChain* getNewBlockChain();
 
 protected:
 	// Type of the event.

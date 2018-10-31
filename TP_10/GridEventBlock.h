@@ -1,11 +1,13 @@
 #pragma once
 #include "GridEvent.h"
+
 class GridEventBlock :
 	public GridEvent
 {
 public:
 	GridEventBlock();
 	virtual ~GridEventBlock();
+	Block* getNewBlock();
 
 protected:
 	// Event content if it is NEW_BLOCK_MINED.
