@@ -25,10 +25,15 @@ protected:
 	// Block that is being mined right now.
 	Block currentBlock;
 	//bool to know when to refresh current mining block
-	bool refreshCurrentBlock;
-	
+	bool needNewBlock;
+	//used to create new currentBlock
+	bool refreshCurrentBlock();
 	// List of nounces already tried.
-	stack<uint32_t> triedNounces;
+	vector<uint32_t> triedNounces;
+	//  returns true if a number is already in triedNounces
+	bool wasTried(uint32_t number);
+	// check if hash satisfies the challenge
+	bool challengeHash(std::string hash);
 
 	
 };
