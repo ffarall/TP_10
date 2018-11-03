@@ -21,7 +21,7 @@ public:
 	virtual ~Trader();
 
 	// This is what you call when this node is given time to act. Non-blocking, just one cycle.
-	virtual bool runCycle();
+	virtual bool runCycle() = 0;
 	// Sends a Transaction type GridEvent.
 	bool emitTransaction(Node& fromNode, vector<Node&> toNodes, vector<double> amountsTransfered);
 	// Returns the UTXOs of this Trader.
@@ -47,6 +47,6 @@ protected:
 	// It's the all of the UTXOs referred to this Trader.
 	vector<Output*> UTXOs;
 	// True if this is a miner, false otherwise.
-	bool isMiner;
+	bool isItMiner;
 };
 

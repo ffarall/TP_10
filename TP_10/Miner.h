@@ -34,7 +34,8 @@ protected:
 	bool wasTried(uint32_t number);
 	// check if hash satisfies the challenge
 	bool challengeHash(std::string hash);
-
+	//delete all tried nounces from vector
+	void clearTriedNounces();
 	
 };
 
