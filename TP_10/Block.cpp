@@ -8,7 +8,7 @@
 Block::Block(vector<Transaction*> transactionsList_, Block & previousBlock_): transactionsList(transactionsList_)
 {
 	setPreviousHash(previousBlock_);
-	transactionsAmount = transactionsList_.size();
+	transactionsCount = transactionsList_.size();
 
 	timestamp = time(NULL);								// Gets time in seconds since epoch.
 }
@@ -16,13 +16,14 @@ Block::Block(vector<Transaction*> transactionsList_, Block & previousBlock_): tr
 Block::Block(vector<Transaction*> transactionsList_, string previousBlockHash_): transactionsList(transactionsList_)
 {
 	setPreviousHash(previousBlockHash_);
-	transactionsAmount = transactionsList_.size();
+	transactionsCount = transactionsList_.size();
 
 	timestamp = time(NULL);								// Gets time in seconds since epoch.
 }
 
 Block::Block()
 {
+	timestamp = time(NULL);								// Gets time in seconds since epoch.
 }
 
 
@@ -83,7 +84,7 @@ string Block::getBlockString()
 	blockString += timeParser.str();				// Making a string out of time.
 
 	blockString += to_string(nounce);				
-	blockString += to_string(transactionsAmount);	// Adding nounce and transactionAmount as string.
+	blockString += to_string(transactionsCount);	// Adding nounce and transactionAmount as string.
 
 	for (auto transaction : transactionsList)
 	{

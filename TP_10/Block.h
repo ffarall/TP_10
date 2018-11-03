@@ -54,7 +54,7 @@ private:
 	// This is what the miners change in order to mine;
 	uint32_t nounce;
 	// Amount of transactions in block.
-	size_t transactionsAmount;
+	size_t transactionsCount;
 	// List of transactions in the block.
 	vector<Transaction*> transactionsList;
 };

@@ -4,6 +4,12 @@
 
 #define PUBLIC_KEY_CHARS 40
 
+Output::Output(uint32_t coins_, ECDSA<ECP, SHA256>::PublicKey lockingScript_)
+{
+	setCoins(coins_);
+	setLockingScript(lockingScript_);
+}
+
 Output::Output()
 {
 }
@@ -11,6 +17,26 @@ Output::Output()
 
 Output::~Output()
 {
+}
+
+uint32_t Output::getCoins()
+{
+	return coins;
+}
+
+ECDSA<ECP, SHA256>::PublicKey Output::getLockingScript()
+{
+	return lockingScript;
+}
+
+void Output::setCoins(uint32_t coins_)
+{
+	coins = coins_;
+}
+
+void Output::setLockingScript(ECDSA<ECP, SHA256>::PublicKey lockingScript_)
+{
+	lockingScript = lockingScript_;
 }
 
 string Output::outputToString()

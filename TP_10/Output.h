@@ -15,6 +15,7 @@ using namespace std;
 class Output
 {
 public:
+	Output(uint32_t coins_, ECDSA<ECP, SHA256>::PublicKey lockingScript_);
 	Output();
 	~Output();
 
