@@ -17,13 +17,17 @@ public:
 	string getHash();
 	vector<Output*> getOutputs();
 	vector<Input*> getInputs();
+	// Creates a string from all the data in the transaction (a string to hash).
+	string getTransactionString();
 
 	void setInputs(vector<Input*> inputs_);
+	void addInput(Input* input_);
 	void setOutputs(vector<Output*> outputs_);
+	void addOutput(Output* output_);
 
 private:
 	// Hashes the transaction.
-	void hashTransaction();  // CAMBIAR ESTA IMPLEMENTACIÓN, NO USAR LOS PUNTEROS PARA EL HASH
+	void hashTransaction();
 
 	// Hash of the transaction;
 	string hash;

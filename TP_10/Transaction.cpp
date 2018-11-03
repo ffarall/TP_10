@@ -70,9 +70,30 @@ vector<Input*> Transaction::getInputs()
 	return inputs;
 }
 
+string Transaction::getTransactionString()
+{
+	string transactionString;
+	transactionString += to_string(inputsCount) + to_string(outputsCount);
+	for (auto input : inputs)
+	{
+		transactionString += input->inputToString();
+	}
+	for (auto output : outputs)
+	{
+		transactionString += output->outputToString();
+	}
+	
+	return transactionString;
+}
+
 void Transaction::setInputs(vector<Input*> inputs_)
 {
 	inputs = inputs_;
+}
+
+void Transaction::addInput(Input * input_)
+{
+	inputs.push_back(input_);
 }
 
 void Transaction::setOutputs(vector<Output*> outputs_)
@@ -80,18 +101,15 @@ void Transaction::setOutputs(vector<Output*> outputs_)
 	outputs = outputs_;
 }
 
+void Transaction::addOutput(Output * output_)
+{
+	outputs.push_back(output_);
+}
+
 void Transaction::hashTransaction()
 {
 	string toHash;
-	toHash += to_string(inputsCount) + to_string(outputsCount);
-	for (auto input : inputs)
-	{
-		toHash += input->inputToString();
-	}
-	for (auto output : outputs)
-	{
-		toHash += output->outputToString();
-	}																								// Creating a string of all the data contained in the transaction to be hashed.
+	toHash = getTransactionString();																							// Creating a string of all the data contained in the transaction to be hashed.
 
 	SHA256 hasher;
 	StringSource s(toHash, true, new HashFilter(hasher, new HexEncoder(new StringSink(hash))));		// Saves result in internal variable hash.

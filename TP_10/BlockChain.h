@@ -1,5 +1,5 @@
 #pragma once
-#include <stack>
+#include <vector>
 #include "Block.h"
 
 using namespace std;
@@ -11,15 +11,15 @@ public:
 	~BlockChain();
 
 	// Adds a Block to the top of the blockChain.
-	bool addBlock();
-	// Deletes all Blocks from top to position.
-	bool deleteBlock(int position);
-	// Returns the information of the Block in the given position, relative to the top.
+	void addBlock(Block* newBlock_);
+	// Returns the Block in the given position, relative to the top, where position = 0 is the block at the top.
 	Block peekBlock(int position);
+	// Returns the Block with that hash.
+	Block peekBlock(string hash);
 
 private:
 	// Actual space in memory where the blockchain is saved.
-	stack<Block> blockChain;
+	vector<Block*> blockChain;
 	// Size of the blockchain in amount of blocks.
 	size_t blockChainSize;
 };
