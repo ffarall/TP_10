@@ -5,7 +5,7 @@
 #define ZERO_IN_HASH 4
 Miner::Miner()
 {
-	isMiner = true; //es minero
+	isItMiner = true; //es minero
 	std::random_device rd;  //Will be used to obtain a seed for the random number engine
 	std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
 }
@@ -17,9 +17,13 @@ Miner::~Miner()
 
 bool Miner::runCycle()
 {
+	
 	while (!infoPackages.empty())
 	{
-		processEvent(&infoPackages.front());
+		if (!processEvent(&infoPackages.front()))
+		{
+			return false;//si hubo un error procesando el evento, salgo y aviso
+		}
 		infoPackages.pop();
 	}
 	if (needNewBlock)
@@ -27,11 +31,11 @@ bool Miner::runCycle()
 		if (refreshCurrentBlock())
 		{
 			//genesis again
-			//vaciar la lista de tried nounces!
+			clearTriedNounces();//vaciar la lista de tried nounces!
 		}
 	}
 	mine();
-	
+	return true;//si llego hasta aca estuvo todo bien
 }
 
 bool Miner::processEvent(GridEvent * gridEvent)
@@ -78,6 +82,16 @@ bool Miner::mine()
 	return false;
 }
 
+bool Miner::refreshCurrentBlock()
+{
+	return false;
+}
+
+bool Miner::wasTried(uint32_t number)
+{
+	return false;
+}
+
 bool Miner::challengeHash(std::string hash) // el challenge es obtener 0 en las primeras posiciones del hash, definido por la constante ZERO_IN_HASH
 {
 	bool error = false;
@@ -89,4 +103,9 @@ bool Miner::challengeHash(std::string hash) // el challenge es obtener 0 en las 
 		}
 	}
 	return error ? false : true;
+}
+
+void Miner::clearTriedNounces()
+{
+	triedNounces.clear();
 }

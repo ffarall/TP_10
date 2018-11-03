@@ -1,6 +1,7 @@
 #pragma once
 #include "Trader.h"
 #include "BlockChain.h"
+#include<list>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ protected:
 	// Checks if a block is well formed.
 	bool validateBlock();
 	// Buffer for transactions to be mined after.
-	vector<Transaction> transactionsBuffer;
+	list<Transaction> transactionsBuffer;
 
 	virtual bool consultBalance();
 
