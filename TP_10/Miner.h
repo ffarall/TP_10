@@ -23,6 +23,8 @@ protected:
 	virtual bool processEvent(GridEvent* gridEvent);
 	// Tries to mine with one nounce the currentBlock.
 	bool mine();
+	// Consults balance in currentBlock's transactions.
+	uint32_t consultBalanceInCurrentBlock();
 
 	// Block that is being mined right now.
 	Block currentBlock;

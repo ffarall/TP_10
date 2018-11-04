@@ -42,6 +42,8 @@ public:
 	string getBlockString();
 	// Returns block's hash.
 	string getHash();
+	// Returns transactionList.
+	vector<Transaction*> getTransactionsList();
 
 	// Returns transaction correspondent to the given hash. If the hash is not found, returns nullptr.
 	Transaction* getTransaction(string hash);
