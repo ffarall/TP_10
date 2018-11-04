@@ -38,6 +38,7 @@ Transaction::Transaction() : inputs(), outputs()
 {
 	inputsCount = 0;
 	outputsCount = 0;
+	timestamp = time(NULL);								// Gets time in seconds since epoch.
 
 	hashTransaction();
 }
@@ -46,6 +47,7 @@ Transaction::Transaction(vector<Input*> inputs_, vector<Output*> outputs_) : inp
 {
 	inputsCount = inputs_.size();
 	outputsCount = outputs_.size();
+	timestamp = time(NULL);								// Gets time in seconds since epoch.
 
 	hashTransaction();
 }
@@ -104,6 +106,13 @@ void Transaction::setOutputs(vector<Output*> outputs_)
 void Transaction::addOutput(Output * output_)
 {
 	outputs.push_back(output_);
+}
+
+bool Transaction::verifyInput(int outputIndex, vector<byte>& signature)
+{
+	ECDSA<ECP, SHA256>::PublicKey pubKey = outputs[outputIndex]->getLockingScript();
+	string data = outputs[outputIndex]->outputToString();
+	return verifySignature(pubKey, data, signature);
 }
 
 void Transaction::hashTransaction()

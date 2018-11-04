@@ -1,6 +1,12 @@
 #include "FullService.h"
 
+#include "osrng.h"
+#include "eccrypto.h"
+#include "oids.h"
+#include "hex.h"
+#include "sha3.h"
 
+using namespace CryptoPP;
 
 FullService::FullService()
 {
@@ -55,9 +61,28 @@ bool FullService::respondBalanceConsulted()
 	return false;
 }
 
-bool FullService::validateTransaction()
+bool FullService::validateTransaction(Transaction& transactionToValidate)
 {
-	return false;
+	for (auto input : transactionToValidate.getInputs())												// Every input in the transaction has to be validated.
+	{																									// Every input refers to a transaction by its hash, where there's an UTXO.
+		for (int i = 0; i < blockChain->getBlockChainSize(); i++)										// Looking for the transaction in the blockhain block by block.
+		{
+			Block blockToSearch = blockChain->peekBlock(i);
+			Transaction * searchedTransaction = blockToSearch.getTransaction(input->getOutputTransactionHash());
+			if (searchedTransaction != nullptr)															// Checking if the transaction that the input refers to is in this block.
+			{
+				int outputIndex = input->getOutputIndex();
+				vector<byte> signature = input->getUnlockingScript();
+				
+				if (!searchedTransaction->verifyInput(outputIndex, signature))							// If signature is not verified, validation returns false.
+				{
+					return false;
+				}
+			}
+		}
+	}
+
+	return true;																						// If all inputs are verified, returns true.
 }
 
 bool FullService::validateBlock()

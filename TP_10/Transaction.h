@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <ctime>
 
 #include "Output.h"
 #include "Input.h"
@@ -25,6 +26,9 @@ public:
 	void setOutputs(vector<Output*> outputs_);
 	void addOutput(Output* output_);
 
+	// To be used by nodes when validating a transaction. Verifies a given input.
+	bool verifyInput(int outputIndex, vector<byte>& signature);
+
 private:
 	// Hashes the transaction.
 	void hashTransaction();
@@ -39,5 +43,7 @@ private:
 	vector<Output*> outputs;
 	// Output counter.
 	size_t outputsCount;
+	// Timestamp to make the transaction unique.
+	time_t timestamp;
 };
 

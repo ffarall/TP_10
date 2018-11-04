@@ -16,6 +16,8 @@ public:
 	Block peekBlock(int position);
 	// Returns the Block with that hash.
 	Block peekBlock(string hash);
+	// Returns count of blocks.
+	size_t getBlockChainSize();
 
 private:
 	// Actual space in memory where the blockchain is saved.

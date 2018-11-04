@@ -43,6 +43,9 @@ public:
 	// Returns block's hash.
 	string getHash();
 
+	// Returns transaction correspondent to the given hash. If the hash is not found, returns nullptr.
+	Transaction* getTransaction(string hash);
+
 
 private:
 	// Hash of this block.

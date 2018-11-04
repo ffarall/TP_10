@@ -18,8 +18,8 @@ protected:
 	virtual bool processEvent(GridEvent* gridEvent);
 	// A FullService can responde this.
 	bool respondBalanceConsulted();
-	// Checks if a transaction is well formed.
-	bool validateTransaction();
+	// Checks if a transaction is well formed, in which case returns true, otherwise false.
+	bool validateTransaction(Transaction& transactionToValidate);
 	// Checks if a block is well formed.
 	bool validateBlock();
 	// Buffer for transactions to be mined after.

@@ -31,3 +31,8 @@ Block BlockChain::peekBlock(string hash)
 		}
 	}
 }
+
+size_t BlockChain::getBlockChainSize()
+{
+	return blockChainSize;
+}

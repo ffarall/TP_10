@@ -98,3 +98,16 @@ string Block::getHash()
 {
 	return thisHash;
 }
+
+Transaction* Block::getTransaction(string hash)
+{
+	for (auto transaction : transactionsList)
+	{
+		if (transaction->getHash == hash)
+		{
+			return transaction;
+		}
+	}
+
+	return nullptr;
+}
