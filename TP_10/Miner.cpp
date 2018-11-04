@@ -96,7 +96,7 @@ bool Miner::processEvent(GridEvent * gridEvent)
 		break;
 	case GridEventType::ASK_FOR_BLOCKCHAIN:
 		GridEventBlockChain* toSend = new GridEventBlockChain();//crear un grid event y mandarselo al nodo que me lo pide
-
+		Trader* receiver = (Trader*)gridEvent->getEmisor();
 		break;
 	default:
 		return false;//error
