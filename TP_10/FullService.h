@@ -34,8 +34,14 @@ protected:
 
 	// Buffer for transactions to be mined after.
 	vector<Transaction*> transactionsBuffer;
-
+	//check if transactions in block are in trans buffer
+	bool isInTransactionBuffer(Block *block);
+	void removeFromTransactionBuffer(Block* block);
+	
 	// Internal BlockChain saved by every FullService.
 	BlockChain* blockChain;
+	//saves new block in blovkvhain
+	void saveInBlockchain(Block *block);
+	bool isGenesis(Block *block);
 };
 

@@ -55,7 +55,3 @@ bool Trader::isMiner()
 	return isItMiner;
 }
 
-bool Trader::respondBalanceConsulted()
-{
-	return false;
-}

@@ -1,5 +1,8 @@
 #include "Miner.h"
 #include<random>
+#include"GridEventBlock.h"
+#include"GridEventBlockChain.h"
+#include"GridEventTransaction.h"
 
 #define MAX_32 4294967296
 #define ZERO_IN_HASH 4
@@ -53,24 +56,57 @@ bool Miner::processEvent(GridEvent * gridEvent)
 	switch (gridEvent->getType())
 	{
 	case GridEventType::NEW_BLOCK_MINED:
-		//buscar en current block
-		//buscar en trasaction buffer
-		//si no esta en ninguno -> inputs vacio? -si-> output suma 20? -si-> valido! agrego a blockchain
-		//								no->	invalido!	<-no
-		//setear el bool de refresh si es necesario
+		GridEventBlock *minedBlockEvent = (GridEventBlock*)gridEvent;
+		if (isInCurrentBlock(minedBlockEvent))//buscar en current block
+		{
+			removeFromCurrentBlock(minedBlockEvent);
+			saveInBlockchain(minedBlockEvent->getNewBlock());
+			needNewBlock = true;//setear el bool de refresh si es necesario
+		}
+		else if (isInTransactionBuffer(minedBlockEvent))//buscar en trasaction buffer
+		{
+			removeFromTransactionBuffer(minedBlockEvent);
+			saveInBlockchain(minedBlockEvent->getNewBlock());
+		}
+		else if (isGenesis())//si no esta en ninguno -> inputs vacio? -si-> output suma 20? -si-> valido! agrego a blockchain
+		{	
+			saveInBlockchain(minedBlockEvent->getNewBlock());
+		}
+		else
+		{
+			return false;//								no->	invalido!	<-no
+		}
+		
 		break;
 	case GridEventType::NEW_TRANSACTION:
-		//si es valida agrego en transaction buffer
-		//si no es valida -> error
+		GridEventTransaction* transactionEvent = (GridEventTransaction*)gridEvent;
+		if (validateTransaction((transactionEvent->getNewTransaction())))//si es valida agrego en transaction buffer
+		{
+			transactionsBuffer.push_back(transactionEvent->getNewTransaction());
+		}
+		else
+		{
+			return false;//si no es valida -> error
+		}
+
+		
 		break;
 	case GridEventType::GET_BLOCKCHAIN:
-		//crear un grid event y mandarselo al nodo que me lo pide
+		GridEventBlockChain* newBlockchain = (GridEventBlockChain*) gridEvent;//copiar blockchain recibida a la mia
+		blockChain = newBlockchain->getNewBlockChain();
+		break;
+	case GridEventType::ASK_FOR_BLOCKCHAIN:
+		GridEventBlockChain* toSend = new GridEventBlockChain();//crear un grid event y mandarselo al nodo que me lo pide
+		toSend->setNewBlockChain(blockChain);
+		Trader* receiver = (Trader*)gridEvent->getEmisor();
+		receiver->receiveNewInformation(*toSend);
+		delete toSend;
 		break;
 	default:
-		//error?
+		return false;//error
 		break;
 	}
-	return false;//algo coherente con lo que haya qeu devolver
+	return true ;//si llego hasta aca esta todo bien
 }
 
 bool Miner::mine()
@@ -126,7 +162,15 @@ void Miner::refreshCurrentBlock()
 
 bool Miner::wasTried(uint32_t number)
 {
-	return false;
+	bool error = false;
+	for (vector<uint32_t>::iterator it = triedNounces.begin(); it != triedNounces.end() && !error; it++)
+	{
+		if (*it == number)
+		{
+			error = true;
+		}
+	}
+	return error;
 }
 
 bool Miner::challengeHash(std::string hash) // el challenge es obtener 0 en las primeras posiciones del hash, definido por la constante ZERO_IN_HASH
