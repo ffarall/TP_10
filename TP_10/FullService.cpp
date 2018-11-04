@@ -5,6 +5,10 @@
 #include "oids.h"
 #include "hex.h"
 #include "sha3.h"
+#include"GridEventBlock.h"
+#include"GridEventBlockChain.h"
+#include"GridEventTransaction.h"
+
 
 using namespace CryptoPP;
 
@@ -38,23 +42,51 @@ bool FullService::processEvent(GridEvent * gridEvent)
 	switch (gridEvent->getType())
 	{
 	case GridEventType::NEW_BLOCK_MINED:
-		//buscar en trasaction buffer
-		//si no esta en ninguno -> inputs vacio? -si-> output suma 20? -si-> valido! agrego a blockchain
-		//								no->	invalido!	<-no
-		
+		GridEventBlock *minedBlockEvent = (GridEventBlock*)gridEvent;
+		 if (isInTransactionBuffer(minedBlockEvent->getNewBlock()))//buscar en trasaction buffer
+		{
+			removeFromTransactionBuffer(minedBlockEvent->getNewBlock());
+			saveInBlockchain(minedBlockEvent->getNewBlock());
+		}
+		else if (isGenesis(minedBlockEvent->getNewBlock()))//si no esta en ninguno -> inputs vacio? -si-> output suma 20? -si-> valido! agrego a blockchain
+		{
+			saveInBlockchain(minedBlockEvent->getNewBlock());
+		}
+		else
+		{
+			return false;//								no->	invalido!	<-no
+		}
+
 		break;
 	case GridEventType::NEW_TRANSACTION:
-		//si es valida agrego en transaction buffer
-		//si no es valida -> error
+		GridEventTransaction* transactionEvent = (GridEventTransaction*)gridEvent;
+		if (validateTransaction((transactionEvent->getNewTransaction())))//si es valida agrego en transaction buffer
+		{
+			transactionsBuffer.push_back(transactionEvent->getNewTransaction());
+		}
+		else
+		{
+			return false;//si no es valida -> error
+		}
+
+
 		break;
 	case GridEventType::GET_BLOCKCHAIN:
-		//crear un grid event y mandarselo al nodo que me lo pide
+		GridEventBlockChain* newBlockchain = (GridEventBlockChain*)gridEvent;//copiar blockchain recibida a la mia
+		blockChain = newBlockchain->getNewBlockChain();
+		break;
+	case GridEventType::ASK_FOR_BLOCKCHAIN:
+		GridEventBlockChain* toSend = new GridEventBlockChain();//crear un grid event y mandarselo al nodo que me lo pide
+		toSend->setNewBlockChain(blockChain);
+		Trader* receiver = (Trader*)gridEvent->getEmisor();
+		receiver->receiveNewInformation(*toSend);
+		delete toSend;
 		break;
 	default:
-		//error?
+		return false;//error
 		break;
 	}
-	return false;//algo coherente con lo que haya qeu devolver
+	return true;//si llego hasta aca esta todo bien
 	
 }
 
