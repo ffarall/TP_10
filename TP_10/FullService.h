@@ -1,7 +1,7 @@
 #pragma once
 #include "Trader.h"
 #include "BlockChain.h"
-#include<list>
+#include <vector>
 
 using namespace std;
 
@@ -22,7 +22,7 @@ protected:
 	// A FullService can responde this.
 	bool respondBalanceConsulted();
 	// Checks if a transaction is well formed, in which case returns true, otherwise false.
-	bool validateTransaction(Transaction& transactionToValidate);
+	bool validateTransaction(Transaction * transactionToValidate);
 	// Checks if a block is well formed.
 	bool validateBlock();
 	// Consults balance in transactionBuffer's transactions.
@@ -31,7 +31,7 @@ protected:
 	uint32_t consultBalanceInBlockChain();
 
 	// Buffer for transactions to be mined after.
-	list<Transaction*> transactionsBuffer;
+	vector<Transaction*> transactionsBuffer;
 
 	// Internal BlockChain saved by every FullService.
 	BlockChain* blockChain;

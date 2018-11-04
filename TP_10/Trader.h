@@ -22,6 +22,8 @@ public:
 	virtual uint32_t consultBalance() = 0;
 	// This is what you call when this node is given time to act. Non-blocking, just one cycle.
 	virtual bool runCycle() = 0;
+	// Consult trader's balance.
+	virtual uint32_t consultBlance() = 0;
 	// Sends a Transaction type GridEvent.
 	bool emitTransaction(Node& fromNode, vector<Node&> toNodes, vector<double> amountsTransfered);
 	// Returns the UTXOs of this Trader.
@@ -31,7 +33,7 @@ public:
 	bool isMiner();
 
 protected:
-	//Process and validate recieved GridEvent from queue. Miner,Full Service and Partial service must do their own implementation
+	//Process and validate received GridEvent from queue. Miner,Full Service and Partial service must do their own implementation
 	virtual bool processEvent(GridEvent* gridEvent) = 0;
 	
 	

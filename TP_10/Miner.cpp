@@ -11,6 +11,7 @@ Miner::Miner()
 	isItMiner = true; //es minero
 	std::random_device rd;  //Will be used to obtain a seed for the random number engine
 	std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+	needNewBlock = true;
 }
 
 
@@ -31,11 +32,9 @@ bool Miner::runCycle()
 	}
 	if (needNewBlock)
 	{
-		if (refreshCurrentBlock())
-		{
-			//genesis again
-			clearTriedNounces();//vaciar la lista de tried nounces!
-		}
+		refreshCurrentBlock();
+		clearTriedNounces();//vaciar la lista de tried nounces!
+		
 	}
 	mine();
 	return true;//si llego hasta aca estuvo todo bien
@@ -144,9 +143,17 @@ uint32_t Miner::consultBalanceInCurrentBlock()
 	return balanceInCurrentBlock;
 }
 
-bool Miner::refreshCurrentBlock()
+void Miner::refreshCurrentBlock()
 {
-	return false;
+	string previousHash = blockChain->peekBlock(0).getHash();				// Retrieving hash from last block in blockChain.
+	currentBlock.setPreviousHash(previousHash);
+
+	currentBlock.updateTime();
+
+	currentBlock.setTransactionList(transactionsBuffer);
+	transactionsBuffer.clear();
+
+	currentBlock.updateTransactionsCount();
 }
 
 bool Miner::wasTried(uint32_t number)

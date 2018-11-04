@@ -50,14 +50,21 @@ void Block::setNounce(uint32_t nounce_)
 	nounce = nounce_;
 }
 
+void Block::updateTransactionsCount()
+{
+	transactionsCount = transactionsList.size();
+}
+
 void Block::addTransaction(Transaction * transaction_)
 {
 	transactionsList.push_back(transaction_);
+	updateTransactionsCount();
 }
 
 void Block::setTransactionList(vector<Transaction*> transactionList_)
 {
 	transactionsList = transactionList_;
+	updateTransactionsCount();
 }
 
 void Block::setPreviousHash(Block & previousBlock_)
