@@ -57,32 +57,32 @@ bool Miner::processEvent(GridEvent * gridEvent)
 	{
 	case GridEventType::NEW_BLOCK_MINED:
 		GridEventBlock *minedBlockEvent = (GridEventBlock*)gridEvent;
-		if (isInCurrentBlock())//buscar en current block
+		if (isInCurrentBlock(minedBlockEvent))//buscar en current block
 		{
-			removeFromCurrentBlock();
-			needNewBlock = true;
+			removeFromCurrentBlock(minedBlockEvent);
+			saveInBlockchain(minedBlockEvent->getNewBlock());
+			needNewBlock = true;//setear el bool de refresh si es necesario
 		}
-		else if (isInTransactionBuffer())//buscar en trasaction buffer
+		else if (isInTransactionBuffer(minedBlockEvent))//buscar en trasaction buffer
 		{
-			removeFromTransactionBuffer();
+			removeFromTransactionBuffer(minedBlockEvent);
+			saveInBlockchain(minedBlockEvent->getNewBlock());
 		}
-		else if ()//si no esta en ninguno -> inputs vacio? -si-> output suma 20? -si-> valido! agrego a blockchain
-		{					//								no->	invalido!	<-no
+		else if (isGenesis())//si no esta en ninguno -> inputs vacio? -si-> output suma 20? -si-> valido! agrego a blockchain
+		{	
+			saveInBlockchain(minedBlockEvent->getNewBlock());
 		}
 		else
 		{
-			return false;
+			return false;//								no->	invalido!	<-no
 		}
 		
-		
-		
-		//setear el bool de refresh si es necesario
 		break;
 	case GridEventType::NEW_TRANSACTION:
 		GridEventTransaction* transactionEvent = (GridEventTransaction*)gridEvent;
-		if (validateTransaction((transactionEvent)))//si es valida agrego en transaction buffer
+		if (validateTransaction((transactionEvent->getNewTransaction())))//si es valida agrego en transaction buffer
 		{
-
+			transactionsBuffer.push_back(transactionEvent->getNewTransaction());
 		}
 		else
 		{
@@ -92,13 +92,15 @@ bool Miner::processEvent(GridEvent * gridEvent)
 		
 		break;
 	case GridEventType::GET_BLOCKCHAIN:
-		//copiar blockchain recibida a la mia
+		GridEventBlockChain* newBlockchain = (GridEventBlockChain*) gridEvent;//copiar blockchain recibida a la mia
+		blockChain = newBlockchain->getNewBlockChain();
 		break;
 	case GridEventType::ASK_FOR_BLOCKCHAIN:
 		GridEventBlockChain* toSend = new GridEventBlockChain();//crear un grid event y mandarselo al nodo que me lo pide
 		toSend->setNewBlockChain(blockChain);
 		Trader* receiver = (Trader*)gridEvent->getEmisor();
-		receiver->receiveNewInformation(toSend);
+		receiver->receiveNewInformation(*toSend);
+		delete toSend;
 		break;
 	default:
 		return false;//error
