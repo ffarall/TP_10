@@ -1,5 +1,8 @@
 #include "Miner.h"
 #include<random>
+#include"GridEventBlock.h"
+#include"GridEventBlockChain.h"
+#include"GridEventTransaction.h"
 
 #define MAX_32 4294967296
 #define ZERO_IN_HASH 4
@@ -54,24 +57,53 @@ bool Miner::processEvent(GridEvent * gridEvent)
 	switch (gridEvent->getType())
 	{
 	case GridEventType::NEW_BLOCK_MINED:
-		//buscar en current block
-		//buscar en trasaction buffer
-		//si no esta en ninguno -> inputs vacio? -si-> output suma 20? -si-> valido! agrego a blockchain
-		//								no->	invalido!	<-no
+		GridEventBlock *minedBlockEvent = (GridEventBlock*)gridEvent;
+		if (isInCurrentBlock())//buscar en current block
+		{
+			removeFromCurrentBlock();
+			needNewBlock = true;
+		}
+		else if (isInTransactionBuffer())//buscar en trasaction buffer
+		{
+			removeFromTransactionBuffer();
+		}
+		else if ()//si no esta en ninguno -> inputs vacio? -si-> output suma 20? -si-> valido! agrego a blockchain
+		{					//								no->	invalido!	<-no
+		}
+		else
+		{
+			return false;
+		}
+		
+		
+		
 		//setear el bool de refresh si es necesario
 		break;
 	case GridEventType::NEW_TRANSACTION:
-		//si es valida agrego en transaction buffer
-		//si no es valida -> error
+		GridEventTransaction* transactionEvent = (GridEventTransaction*)gridEvent;
+		if (validateTransaction((transactionEvent)))//si es valida agrego en transaction buffer
+		{
+
+		}
+		else
+		{
+			return false;//si no es valida -> error
+		}
+
+		
 		break;
 	case GridEventType::GET_BLOCKCHAIN:
-		//crear un grid event y mandarselo al nodo que me lo pide
+		//copiar blockchain recibida a la mia
+		break;
+	case GridEventType::ASK_FOR_BLOCKCHAIN:
+		GridEventBlockChain* toSend = new GridEventBlockChain();//crear un grid event y mandarselo al nodo que me lo pide
+
 		break;
 	default:
-		//error?
+		return false;//error
 		break;
 	}
-	return false;//algo coherente con lo que haya qeu devolver
+	return true ;//si llego hasta aca esta todo bien
 }
 
 bool Miner::mine()
@@ -119,7 +151,15 @@ bool Miner::refreshCurrentBlock()
 
 bool Miner::wasTried(uint32_t number)
 {
-	return false;
+	bool error = false;
+	for (vector<uint32_t>::iterator it = triedNounces.begin(); it != triedNounces.end() && !error; it++)
+	{
+		if (*it == number)
+		{
+			error = true;
+		}
+	}
+	return error;
 }
 
 bool Miner::challengeHash(std::string hash) // el challenge es obtener 0 en las primeras posiciones del hash, definido por la constante ZERO_IN_HASH
