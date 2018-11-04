@@ -22,6 +22,8 @@ vector<Node*> Node::getNeighbours()
 	return neighbours;
 }
 
+
+
 void Node::sendInformation(GridEvent & info)
 {
 	Node* emitter = info.getEmisor(); //guardo el emisor original
@@ -40,10 +42,14 @@ void Node::sendInformation(GridEvent & info)
 
 void Node::receiveNewInformation(GridEvent & info)
 {
-	//validate info here!!!
-	infoPackages.push(info);	
-	sendInformation(info);
-		
+	if (isNewEvent())
+	{
+		infoPackages.push(info);
+		if (!(info.getType() == GridEventType::ASK_FOR_BLOCKCHAIN || info.getType() == GridEventType::GET_BLOCKCHAIN))
+		{
+			sendInformation(info);
+		}
+	}
 }
 
 GridEvent  Node::getNewInformation()
