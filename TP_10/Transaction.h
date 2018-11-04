@@ -25,6 +25,7 @@ public:
 	void addInput(Input* input_);
 	void setOutputs(vector<Output*> outputs_);
 	void addOutput(Output* output_);
+	void updateData();
 
 	// To be used by nodes when validating a transaction. Verifies a given input.
 	bool verifyInput(int outputIndex, vector<byte>& signature);

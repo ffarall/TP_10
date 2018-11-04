@@ -21,9 +21,6 @@ public:
 
 	void setType(GridEventType type_);
 	void setEmisor(Node * emisor_);
-	void setNewBlock(Block& block_);
-	void setNewTransaction(Transaction& transaction_);
-	void setNewBlockChain(BlockChain& blockChain);
 
 	GridEventType getType();
 	Node* getEmisor();

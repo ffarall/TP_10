@@ -7,6 +7,7 @@ public:
 	GridEventBlockChain();
 	virtual ~GridEventBlockChain();
 	BlockChain* getNewBlockChain();
+	void setNewBlockChain(BlockChain * newBlockChain_);
 
 protected:
 	// Event content if it is GET_BLOCKCHAIN.

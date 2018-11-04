@@ -108,6 +108,14 @@ void Transaction::addOutput(Output * output_)
 	outputs.push_back(output_);
 }
 
+void Transaction::updateData()
+{
+	timestamp = time(NULL);
+	inputsCount = inputs.size();
+	outputsCount = outputs.size();
+	hashTransaction();
+}
+
 bool Transaction::verifyInput(int outputIndex, vector<byte>& signature)
 {
 	ECDSA<ECP, SHA256>::PublicKey pubKey = outputs[outputIndex]->getLockingScript();

@@ -17,7 +17,7 @@ public:
 	virtual uint32_t consultBalance();
 
 protected:
-	//Process and validate recieved GridEvent from queue.
+	//Process and validate received GridEvent from queue.
 	virtual bool processEvent(GridEvent* gridEvent);
 	// A FullService can responde this.
 	bool respondBalanceConsulted();
@@ -29,6 +29,8 @@ protected:
 	uint32_t consultBalanceInBuffer();
 	// Consults balance in blockChain's transactions.
 	uint32_t consultBalanceInBlockChain();
+	// Gets a list of UTXOs that sum the same or more of the needed amount to transfer. Returns the sum.
+	virtual uint32_t getNeededUTXOs(vector<Input*> * neededUTXOs, uint32_t neededAmount);
 
 	// Buffer for transactions to be mined after.
 	vector<Transaction*> transactionsBuffer;

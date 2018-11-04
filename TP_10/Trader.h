@@ -25,9 +25,11 @@ public:
 	// Consult trader's balance.
 	virtual uint32_t consultBlance() = 0;
 	// Sends a Transaction type GridEvent.
-	bool emitTransaction(Node& fromNode, vector<Node&> toNodes, vector<double> amountsTransfered);
+	void emitTransaction(Trader* fromNode, vector<Trader*> toNodes, vector<uint32_t> amountsTransfered);
 	// Returns the UTXOs of this Trader.
 	vector<Output*> getUTXOs();
+	// Returns publicKey.
+	ECDSA<ECP, SHA256>::PublicKey getPublicKey();
 
 	// Returns true if this is a miner.
 	bool isMiner();
@@ -37,6 +39,8 @@ protected:
 	virtual bool processEvent(GridEvent* gridEvent) = 0;
 	// A simple Trader will return that he couldn't get that information, because it's not a FullService.
 	bool respondBalanceConsulted();
+	// Gets a list of UTXOs that sum the same or more of the needed amount to transfer. Returns the sum.
+	virtual uint32_t getNeededUTXOs(vector<Input*> * neededUTXOs, uint32_t neededAmount) = 0;
 
 	// Trader's Public Key.
 	ECDSA<ECP, SHA256>::PublicKey publicKey;
