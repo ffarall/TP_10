@@ -99,6 +99,11 @@ string Block::getHash()
 	return thisHash;
 }
 
+vector<Transaction*> Block::getTransactionsList()
+{
+	return transactionsList;
+}
+
 Transaction* Block::getTransaction(string hash)
 {
 	for (auto transaction : transactionsList)

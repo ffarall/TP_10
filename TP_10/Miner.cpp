@@ -38,6 +38,17 @@ bool Miner::runCycle()
 	return true;//si llego hasta aca estuvo todo bien
 }
 
+uint32_t Miner::consultBalance()
+{
+	uint32_t balance = 0;
+
+	balance += consultBalanceInBuffer();
+	balance += consultBalanceInBlockChain();
+	balance += consultBalanceInCurrentBlock();
+
+	return balance;
+}
+
 bool Miner::processEvent(GridEvent * gridEvent)
 {
 	switch (gridEvent->getType())
@@ -80,6 +91,25 @@ bool Miner::mine()
 		//emitir el evento de bloque minado
 	}
 	return false;
+}
+
+uint32_t Miner::consultBalanceInCurrentBlock()
+{
+	uint32_t balanceInCurrentBlock = 0;
+
+	for (auto transaction : currentBlock.getTransactionsList())								// For every transaction in currentBlock.
+	{
+		for (auto output : transaction->getOutputs())										// For every output in the transaction.
+		{
+			ECDSA<ECP, SHA256>::PublicKey outputPublicKey = output->getLockingScript();
+			if (outputPublicKey == publicKey)												// If the public key of the output is this trader's public key...
+			{
+				balanceInCurrentBlock += output->getCoins();								// Adds to the balance.
+			}
+		}
+	}
+
+	return balanceInCurrentBlock;
 }
 
 bool Miner::refreshCurrentBlock()

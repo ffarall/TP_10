@@ -90,7 +90,54 @@ bool FullService::validateBlock()
 	return false;
 }
 
+uint32_t FullService::consultBalanceInBuffer()
+{
+	uint32_t balanceInBuffer = 0;
+
+	for (auto transaction : transactionsBuffer)														// For every transaction in transactionBuffer 
+	{
+		for (auto output : transaction->getOutputs())												// For every output in the transaction.
+		{
+			ECDSA<ECP, SHA256>::PublicKey outputPublicKey = output->getLockingScript();
+			if (outputPublicKey == publicKey)														// If the public key of the output is this trader's public key...
+			{
+				balanceInBuffer += output->getCoins();												// Adds to the balance.
+			}
+		}
+	}
+
+	return balanceInBuffer;
+}
+
+uint32_t FullService::consultBalanceInBlockChain()
+{
+	uint32_t balanceInBlockChain = 0;
+
+	for (int i = 0; i < blockChain->getBlockChainSize(); i++)										// For every block in the blockChain.
+	{
+		Block blockToConsult = blockChain->peekBlock(i);
+		for (auto transaction : blockToConsult.getTransactionsList())								// For every transaction in the block.
+		{
+			for (auto output : transaction->getOutputs())											// For every output in the transaction.
+			{
+				ECDSA<ECP, SHA256>::PublicKey outputPublicKey = output->getLockingScript();
+				if (outputPublicKey == publicKey)													// If the public key of the output is this trader's public key...
+				{
+					balanceInBlockChain += output->getCoins();										// Adds to the balance.
+				}
+			}
+		}
+	}
+
+	return balanceInBlockChain;
+}
+
 uint32_t FullService::consultBalance()
 {
-	
+	uint32_t balance = 0;
+
+	balance += consultBalanceInBuffer();
+	balance += consultBalanceInBlockChain();
+
+	return balance;
 }

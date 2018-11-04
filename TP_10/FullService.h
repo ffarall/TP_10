@@ -25,6 +25,11 @@ protected:
 	bool validateTransaction(Transaction& transactionToValidate);
 	// Checks if a block is well formed.
 	bool validateBlock();
+	// Consults balance in transactionBuffer's transactions.
+	uint32_t consultBalanceInBuffer();
+	// Consults balance in blockChain's transactions.
+	uint32_t consultBalanceInBlockChain();
+
 	// Buffer for transactions to be mined after.
 	list<Transaction*> transactionsBuffer;
 
