@@ -15,6 +15,8 @@ public:
 
 	// This is what you call when this node is given time to act. Non-blocking, just one cycle.
 	virtual bool runCycle();
+	// Checks UTXO to this node's name in transactionBuffer, currentBlock and in blockChain.
+	virtual uint32_t consultBalance();
 
 protected:
 	//Process and validate recieved GridEvent from queue.

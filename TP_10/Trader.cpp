@@ -26,11 +26,6 @@ bool Trader::isMiner()
 	return isItMiner;
 }
 
-bool Trader::consultBalance()
-{
-	return false;
-}
-
 bool Trader::respondBalanceConsulted()
 {
 	return false;

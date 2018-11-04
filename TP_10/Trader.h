@@ -33,8 +33,6 @@ public:
 protected:
 	//Process and validate recieved GridEvent from queue. Miner,Full Service and Partial service must do their own implementation
 	virtual bool processEvent(GridEvent* gridEvent) = 0;
-	// Sends a GridEvent asking for information.
-	virtual bool consultBalance();
 	// A simple Trader will return that he couldn't get that information, because it's not a FullService.
 	bool respondBalanceConsulted();
 

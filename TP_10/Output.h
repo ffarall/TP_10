@@ -24,14 +24,19 @@ public:
 
 	void setCoins(uint32_t coins_);
 	void setLockingScript(ECDSA<ECP, SHA256>::PublicKey lockingScript_);
+	void setIsUTXO(bool value);
 
 	// Creates string of all the Input data.
 	string outputToString();
+	// Check if output is used.
+	bool isUsed();
 
 private:
 	// Public Key of the owner of the amount of coins.
 	ECDSA<ECP, SHA256>::PublicKey lockingScript;
 	// Amount of coins attributed to the owner.
 	uint32_t coins;
+	// Determines if the output is already used or not.
+	bool isUTXO;
 };
 

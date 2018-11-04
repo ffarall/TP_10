@@ -8,10 +8,12 @@ Output::Output(uint32_t coins_, ECDSA<ECP, SHA256>::PublicKey lockingScript_)
 {
 	setCoins(coins_);
 	setLockingScript(lockingScript_);
+	setIsUTXO(false);
 }
 
 Output::Output()
 {
+	setIsUTXO(false);
 }
 
 
@@ -39,6 +41,11 @@ void Output::setLockingScript(ECDSA<ECP, SHA256>::PublicKey lockingScript_)
 	lockingScript = lockingScript_;
 }
 
+void Output::setIsUTXO(bool value)
+{
+	isUTXO = value;
+}
+
 string Output::outputToString()
 {
 	string outputString;
@@ -58,4 +65,9 @@ string Output::outputToString()
 	encoder.MessageEnd();
 
 	return outputString;
+}
+
+bool Output::isUsed()
+{
+	return isUTXO;
 }

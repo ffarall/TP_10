@@ -11,7 +11,10 @@ class FullService :
 public:
 	FullService();
 	virtual ~FullService();
+	// In a FullService only processes the events.
 	virtual bool runCycle();
+	// Checks UTXO to this node's name in transactionBuffer and in blockChain.
+	virtual uint32_t consultBalance();
 
 protected:
 	//Process and validate recieved GridEvent from queue.
@@ -23,9 +26,7 @@ protected:
 	// Checks if a block is well formed.
 	bool validateBlock();
 	// Buffer for transactions to be mined after.
-	list<Transaction> transactionsBuffer;
-
-	virtual bool consultBalance();
+	list<Transaction*> transactionsBuffer;
 
 	// Internal BlockChain saved by every FullService.
 	BlockChain* blockChain;

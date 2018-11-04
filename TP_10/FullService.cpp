@@ -90,7 +90,7 @@ bool FullService::validateBlock()
 	return false;
 }
 
-bool FullService::consultBalance()
+uint32_t FullService::consultBalance()
 {
-	return false;
+	
 }
