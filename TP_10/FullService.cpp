@@ -11,11 +11,13 @@ using namespace CryptoPP;
 FullService::FullService()
 {
 	isItMiner = false;//como no es minero entonces es full service
+	blockChain = new BlockChain();
 }
 
 
 FullService::~FullService()
 {
+	delete blockChain;
 }
 
 bool FullService::runCycle()
@@ -61,9 +63,9 @@ bool FullService::respondBalanceConsulted()
 	return false;
 }
 
-bool FullService::validateTransaction(Transaction& transactionToValidate)
+bool FullService::validateTransaction(Transaction * transactionToValidate)
 {
-	for (auto input : transactionToValidate.getInputs())												// Every input in the transaction has to be validated.
+	for (auto input : transactionToValidate->getInputs())												// Every input in the transaction has to be validated.
 	{																									// Every input refers to a transaction by its hash, where there's an UTXO.
 		for (int i = 0; i < blockChain->getBlockChainSize(); i++)										// Looking for the transaction in the blockhain block by block.
 		{

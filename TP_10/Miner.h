@@ -19,7 +19,7 @@ public:
 	virtual uint32_t consultBalance();
 
 protected:
-	//Process and validate recieved GridEvent from queue.
+	//Process and validate received GridEvent from queue.
 	virtual bool processEvent(GridEvent* gridEvent);
 	// Tries to mine with one nounce the currentBlock.
 	bool mine();
@@ -31,7 +31,7 @@ protected:
 	//bool to know when to refresh current mining block
 	bool needNewBlock;
 	//used to create new currentBlock
-	bool refreshCurrentBlock();
+	void refreshCurrentBlock();
 	// List of nounces already tried.
 	vector<uint32_t> triedNounces;
 	//  returns true if a number is already in triedNounces

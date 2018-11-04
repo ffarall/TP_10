@@ -27,6 +27,8 @@ public:
 	void updateTime();
 	// Changes nounce.
 	void setNounce(uint32_t nounce_);
+	// Updates transactionsCount.
+	void updateTransactionsCount();
 
 	// Adds transaction to block.
 	void addTransaction(Transaction* transaction_);
