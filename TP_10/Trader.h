@@ -19,7 +19,7 @@ class Trader :
 public:
 	Trader();
 	virtual ~Trader();
-
+	virtual uint32_t consultBalance() = 0;
 	// This is what you call when this node is given time to act. Non-blocking, just one cycle.
 	virtual bool runCycle() = 0;
 	// Consult trader's balance.
